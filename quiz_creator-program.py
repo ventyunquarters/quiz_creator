@@ -76,6 +76,28 @@ def ask_question(quiz_data):
         print(f"Incorrect. The correct answer was: {correct_answer}")
         return 0, False
 
+#Save the high score to a file if it's a new high
+def save_high_score(score, filename="highscore.txt"):
+    high_score = 0
+
+    # Check if a high score file already exists
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            try:
+                high_score = int(file.read().strip())
+            except ValueError:
+                high_score = 0
+
+    # Compare the current score to the saved high score
+    if score > high_score:
+        # If current score is higher, update the file
+        with open(filename, 'w') as file:
+            file.write(str(score))
+        print(" New High Score!")
+    else:
+        # Show current high score to beat
+        print(f" High Score to Beat: {high_score}")
+
+
 #Stop the game when there's three incorrect answers
 
-#Record the highscore
