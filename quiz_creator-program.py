@@ -115,4 +115,22 @@ def start_quiz(quiz_data):
         points, correct = ask_question(quiz_data)
         total_score += points
 
+        # Track incorrect answers
+        if not correct:
+            wrong_count += 1
+            print(f"Wrong Answers: {wrong_count}/{max_wrong}")
 
+        # Show updated score
+        print(f"Current Score: {total_score} point(s)")
+
+    # Game over message
+    print("\n Game Over! You reached 3 incorrect answers.")
+    print(f"Final Score: {total_score} point(s)")
+
+    # Save score if it's a high score
+    save_high_score(total_score)
+
+
+# Start the game
+quiz_data = load_quiz("quiz.txt")
+start_quiz(quiz_data)
