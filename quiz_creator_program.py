@@ -6,7 +6,7 @@ import os
 def load_quiz(filename):
     #Open the file and split questions by blank lines
     with open(filename, 'r') as file:
-        raw_entries = file.read().strip().split('\n\n') #Splits the tet at every double line for questions
+        raw_entries = file.read().strip().split('\n\n') #Splits the text at every double line for questions
 
     quiz_data = []
     for entry in raw_entries:
@@ -35,14 +35,19 @@ def ask_question(quiz_data):
 
     #Display the question and all the choices numbered
     print("\n Question:", question)
-    for idx, choice in enumerate(choices, start=1):
-        print(f"  {idx}. {choice}")
+    choice_labels = ['A', 'B', 'C', 'D']  # Can extend if needed
+    label_to_choice = {}
+
+    for idx, choice in enumerate(choices):
+        label = choice_labels[idx]
+        label_to_choice[label] = choice
+        print(f"  {label}. {choice}")
 
     #Starting the timer when the user sees the question
     start_time = time.time()
     try:
         #Get the user's answer
-        user_input = int(input("Enter the number of your answer: ").strip())
+        user_input = input("Enter the letter of your answer: ").strip().upper()
         end_time = time.time()
     except ValueError:
         # If input is invalid (e.g., letters), count it as wrong
@@ -50,12 +55,12 @@ def ask_question(quiz_data):
         return 0, False
 
     #Check if the input is valid choice of number
-    if not (1 <= user_input <= len(choices)):
-        print("Choice is out of range.")
+    if user_input not in label_to_choice:
+        print("Choice is invalid.")
         return 0, False
 
     #Track the number input to the actual answer
-    user_answer = choices[user_input - 1]
+    user_answer = label_to_choice[user_input]
     time_taken = end_time - start_time
 
     print(f"You answered in {time_taken:.2f} seconds.")
