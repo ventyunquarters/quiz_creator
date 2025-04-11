@@ -38,6 +38,29 @@ def ask_question(quiz_data):
     for idx, choice in enumerate(choices, start=1):
         print(f"  {idx}. {choice}")
 
+    #Starting the timer when the user sees the question
+    start_time = time.time()
+    try:
+        #Get the user's answer
+        user_input = int(input("Enter the number of your answer: ").strip())
+        end_time = time.time()
+    except ValueError:
+        # If input is invalid (e.g., letters), count it as wrong
+        print(" Invalid input. Counting as incorrect.")
+        return 0, False
+
+    #Check if the input is valid choice of number
+    if not (1 <= user_input <= len(choices)):
+        print("Choice is out of range.")
+        return 0, False
+
+    #Track the number input to the actual answer
+    user_answer = choices[user_input - 1]
+    time_taken = end_time - start_time
+
+    print(f"You answered in {time_taken:.2f} seconds.")
+
+
 #Stop the game when there's three incorrect answers
 
 #Record the highscore
