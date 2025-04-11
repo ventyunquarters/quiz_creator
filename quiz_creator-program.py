@@ -20,8 +20,23 @@ def load_quiz(filename):
     return quiz_data
 
 #Ask one question and return the score earned and correctness
+def ask_question(quiz_data):
+    #Add a timer to give bonuses for early answers
+    #Define bonus conditions
+    bonus_time_limit = 15
+    bonus_points = 2
+    normal_points = 1
 
-#Add a timer to give bonuses for early answers
+    #Randomly select a question from the quiz data
+    question, correct_answer, choices = random.choice(quiz_data)
+
+    #Shuffle the answer choices for unpredictability
+    random.shuffle(choices)
+
+    #Display the question and all the choices numbered
+    print("\n Question:", question)
+    for idx, choice in enumerate(choices, start=1):
+        print(f"  {idx}. {choice}")
 
 #Stop the game when there's three incorrect answers
 
