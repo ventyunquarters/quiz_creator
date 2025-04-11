@@ -60,6 +60,21 @@ def ask_question(quiz_data):
 
     print(f"You answered in {time_taken:.2f} seconds.")
 
+    #Check if the answer is correct and assigns the score
+    if user_answer.lower() == correct_answer.lower():
+        if time_taken <= bonus_time_limit:
+            #The user is fast and correct: Will give bonus
+            print("Correct! Bonus points for speed!")
+            return normal_points + bonus_points, True
+        else:
+            # Correct, but no bonus
+            print("Correct!")
+            return normal_points, True
+
+    else:
+        #Wrong answer
+        print(f"Incorrect. The correct answer was: {correct_answer}")
+        return 0, False
 
 #Stop the game when there's three incorrect answers
 
