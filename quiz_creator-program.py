@@ -1,4 +1,13 @@
-#Define the quiz function to load it
+import time
+import random
+import os
+
+#Define the quiz function to load it. It will come from a file with multiple choice questions
+def load_quiz(filename):
+    #Open the file and split questions by blank lines
+    with open(filename, 'r') as file:
+        raw_entries = file.read().strip().split('\n\n') #Splits the tet at every double line for questions
+
 
 #Ask one question and return the score earned and correctness
 
