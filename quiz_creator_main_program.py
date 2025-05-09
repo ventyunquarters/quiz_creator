@@ -54,12 +54,48 @@ def ask_question(quiz_data):
         print(Fore.RED + " Invalid input. Counting as incorrect.")
         return 0, False
 
-
+    #Check if the input is valid choice of number
     if user_input not in label_to_choice:
         print(Fore.RED + "Choice is invalid.")
         return 0, False
 
+    #Track the number input to the actual answer
     user_answer = label_to_choice[user_input]
     time_taken = end_time - start_time
 
     print(f"You answered in {time_taken:.2f} seconds.")
+
+    #Check if the answer is correct and assigns the score
+    if user_answer.lower() == correct_answer.lower():
+        if time_taken <= bonus_time_limit:
+            # The user is fast and correct: Will give bonus
+            print(Fore.GREEN + "Correct! Bonus points for speed!")
+            return normal_points + bonus_points, True
+        else:
+            # Correct, but no bonus
+            print(Fore.GREEN + "Correct!")
+            return normal_points, True
+    else:
+        # Wrong answer
+        print(Fore.RED + f"Incorrect. The correct answer was: {correct_answer}")
+        return 0, False
+
+#Save the high score to a file if it's a new high
+def save_high_score(score, filename="highscore.txt"):
+    high_score = 0
+
+    # Check if a high score file already exists. Reads file
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            try:
+                high_score = int(file.read().strip())
+            except ValueError:
+                high_score = 0
+    # Compare the current score to the saved high score
+    if score > high_score:
+        with open(filename, 'w') as file:
+            file.write(str(score))
+        print(Fore.MAGENTA + "🎉 New High Score!")
+    else:
+        # If current score is higher, update the file
+        print(Fore.BLUE + f"High Score to Beat: {high_score}")
