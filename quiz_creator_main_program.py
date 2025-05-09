@@ -19,3 +19,21 @@ def load_quiz(filename):
         quiz_data.append((question, answer, choices))
     return quiz_data
 
+#Ask one question and return the score earned and correctness
+def ask_question(quiz_data):
+    #Add a timer to give bonuses for early answers
+    #Define bonus conditions
+    bonus_time_limit = 15
+    bonus_points = 2
+    normal_points = 1
+
+    #Randomly select a question from the quiz data
+    question, correct_answer, choices = random.choice(quiz_data)
+
+    #Shuffle the answer choices for unpredictability
+    random.shuffle(choices)
+
+    #Display the question and all the choices numbered and colored
+    print(Fore.CYAN + "\nQuestion: " + Style.BRIGHT + question)
+    choice_labels = ['A', 'B', 'C', 'D']
+    label_to_choice = {}
