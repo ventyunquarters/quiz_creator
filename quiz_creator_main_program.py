@@ -37,3 +37,29 @@ def ask_question(quiz_data):
     print(Fore.CYAN + "\nQuestion: " + Style.BRIGHT + question)
     choice_labels = ['A', 'B', 'C', 'D']
     label_to_choice = {}
+
+    for idx, choice in enumerate(choices):
+        label = choice_labels[idx]
+        label_to_choice[label] = choice
+        print(Fore.YELLOW + f"  {label}. {choice}")
+
+    #Starting the timer when the user sees the question
+    start_time = time.time()
+    try:
+        # Get the user's answer
+        user_input = input(Fore.WHITE + "Enter the letter of your answer: ").strip().upper()
+        end_time = time.time()
+    except ValueError:
+        # If input is invalid (e.g., letters), count it as wrong
+        print(Fore.RED + " Invalid input. Counting as incorrect.")
+        return 0, False
+
+
+    if user_input not in label_to_choice:
+        print(Fore.RED + "Choice is invalid.")
+        return 0, False
+
+    user_answer = label_to_choice[user_input]
+    time_taken = end_time - start_time
+
+    print(f"You answered in {time_taken:.2f} seconds.")
