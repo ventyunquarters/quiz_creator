@@ -99,3 +99,40 @@ def save_high_score(score, filename="highscore.txt"):
     else:
         # If current score is higher, update the file
         print(Fore.BLUE + f"High Score to Beat: {high_score}")
+
+#Run the quiz on the loop
+def start_quiz(quiz_data):
+    total_score = 0
+    wrong_count = 0
+    max_wrong = 3 #Stop the game when there's three incorrect answers
+
+    # Welcome messages
+    print(Fore.CYAN + Style.BRIGHT + "Welcome to the Quiz!")
+    print("Pick the correct letter of the answer to earn points.")
+    print(Fore.LIGHTBLACK_EX + "Answer within 15 seconds for bonus points.")
+    print(Fore.RED + "Game ends after 3 incorrect answers.\n")
+
+    # Will keep asking questions until the user gets 3 wrong
+    while wrong_count < max_wrong:
+        # Ask one question and get the result
+        points, correct = ask_question(quiz_data)
+        total_score += points
+
+        # Track incorrect answers
+        if not correct:
+            wrong_count += 1
+            print(Fore.RED + f"Wrong Answers: {wrong_count}/{max_wrong}")
+
+        # Show updated score
+        print(Fore.GREEN + f"Current Score: {total_score} point(s)\n")
+
+    # Game over message
+    print(Fore.RED + "\nGame Over! You reached 3 incorrect answers.")
+    print(Fore.YELLOW + f"Final Score: {total_score} point(s)")
+
+    # Save score if it's a high score
+    save_high_score(total_score)
+
+# Load and start
+quiz_data = load_quiz("quiz.txt")
+start_quiz(quiz_data)
